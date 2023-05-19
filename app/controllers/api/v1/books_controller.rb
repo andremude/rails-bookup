@@ -21,10 +21,9 @@ class Api::V1::BooksController < ApplicationController
       respond_to do | format |
         if @book.save
           format.json do
-            render
-            :show,
-            status: :created,
-            location: api_v1_book_path(@book)
+            render :show,
+                    status: :created,
+                    location: api_v1_book_path(@book)
           end
         else
           format.json do
