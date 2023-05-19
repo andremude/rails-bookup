@@ -7,6 +7,11 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def show
+    if authorized?
+      respond_to { |format| format.json { render :show } }
+    else
+      handle_unauthorized
+    end
   end
 
   def create
