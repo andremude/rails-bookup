@@ -57,6 +57,12 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def destroy
+    if authorized?
+      @book.destroy
+      respond_to { |format| format.json { head :no_content } }
+    else
+      handle_unauthorized
+    end
   end
 
   private
