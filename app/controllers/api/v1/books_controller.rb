@@ -15,6 +15,26 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def create
+    @book = current_user.books.build(book_params)
+
+    if authorized?
+      respond_to do | format |
+        if @book.save
+          format.json do
+            render
+            :show,
+            status: :created,
+            location: api_v1_book_path(@book)
+          end
+        else
+          format.json do
+            render json: @book.error, status: :unprocessable_entity
+          end
+        end
+      end
+    else
+      handle_unauthorized
+    end
   end
 
   def update
@@ -24,6 +44,10 @@ class Api::V1::BooksController < ApplicationController
   end
 
   private
+
+  def book_params
+    params.require(:book).permit(:title, :author, :finished)
+  end
 
   def set_book
     @book = Book.find(params[:id])
