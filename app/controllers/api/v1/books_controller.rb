@@ -18,7 +18,7 @@ class Api::V1::BooksController < ApplicationController
     @book = current_user.books.build(book_params)
 
     if authorized?
-      respond_to do | format |
+      respond_to do |format|
         if @book.save
           format.json do
             render :show,
@@ -37,6 +37,23 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def update
+    if authorized?
+      respond_to do |format|
+        if @book.update(book_params)
+          format.json do
+            render :show,
+                    status: :ok,
+                    location: api_v1_book_path(@book_item)
+          end
+        else
+          format.json do
+            render json: @book.errors, status: :unprocessable_entity
+          end
+        end
+      end
+    else
+      handle_unauthorized
+    end
   end
 
   def destroy
