@@ -16,26 +16,26 @@ module.exports = function(api) {
   }
 
   return {
-    presets: [
-      isTestEnv && [
-        '@babel/preset-env',
-        {
-          targets: {
-            node: 'current'
-          }
-        }
-      ],
-      (isProductionEnv || isDevelopmentEnv) && [
-        '@babel/preset-env',
-        {
-          forceAllTransforms: true,
-          useBuiltIns: 'entry',
-          corejs: 3,
-          modules: false,
-          exclude: ['transform-typeof-symbol']
-        }
-      ]
-    ].filter(Boolean),
+  presets: [
+  isTestEnv && [
+    '@babel/preset-env',
+    {
+      targets: {
+        node: 'current'
+      }
+    }
+  ],
+  (isProductionEnv || isDevelopmentEnv) && [
+    '@babel/preset-env',
+    {
+      forceAllTransforms: true,
+      useBuiltIns: 'entry',
+      corejs: 3,
+      modules: false,
+      exclude: ['transform-typeof-symbol']
+    }
+  ],
+  '@babel/preset-react'].filter(Boolean),
     plugins: [
       'babel-plugin-macros',
       '@babel/plugin-syntax-dynamic-import',
