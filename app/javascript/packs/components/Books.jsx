@@ -13,13 +13,11 @@ const Books = () => {
     setUpdate(false)},
     [isUpdate])
 
-
   const getBooks = async () => {
     const response = await axios.get('http://localhost:3000/api/v1/books')
     const data = response.data
     setBooks(data.reverse())
   }
-
 
   const updateBooks = (Book) => {
     let book = books;
@@ -41,6 +39,7 @@ const Books = () => {
             <th className=""></th>
           </tr>
         </thead>
+        <br />
         <tbody className='mt-4'>
           {books.map((book) => (
           <>
