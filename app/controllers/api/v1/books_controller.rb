@@ -76,7 +76,7 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def authorized?
-    @book.user == curent_user
+    @book.user == current_user
   end
 
   def handle_unauthorized
