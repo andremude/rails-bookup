@@ -16,6 +16,7 @@ user = User.create(email: "paulj@example.com", password: "123456")
   Book.create(
     title: Faker::Book.title,
     author: Faker::Book.author,
-    user: user
+    user: user,
+    finished: false
   )
 end
