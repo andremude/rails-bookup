@@ -7,6 +7,7 @@ const Books = () => {
 
   const [books, setBooks] = useState([])
   const [isUpdate, setUpdate] = useState(false)
+  const [hideFinished, setHideFinished] = useState(false)
 
   useEffect(() => {
     getBooks()
@@ -26,9 +27,18 @@ const Books = () => {
     setUpdate(true)
   }
 
+  const handleClick = () => {
+    setHideFinished(!hideFinished);
+  }
+
   return (
     <div className="table-responsive px-2">
       <BookForm updateBooks={updateBooks}/>
+        <div className='d-flex justify-content-center px-2'>
+          <button className="btn btn-outline-primary btn-block mb-3 w-100" onClick={handleClick}>
+            {hideFinished ? "Show Books Already Read" : "Hide Books Already Read"}
+          </button>
+        </div>
       <table className="table">
         <thead>
           <tr className=''>
@@ -47,8 +57,10 @@ const Books = () => {
               key={book.id}
               title={book.title}
               author={book.author}
+              finished={book.finished}
               id={book.id}
               getBooks={getBooks}
+              hideFinished={hideFinished}
               />
           </>
           ))}

@@ -3,7 +3,7 @@ import axios from 'axios';
 import setAxiosHeaders from "./AxiosHeaders.jsx";
 import _ from 'lodash'
 
-const Book = ({ title, author, id, finished, getBooks }) => {
+const Book = ({ title, author, id, finished, getBooks, hideFinished }) => {
   const [isFinished, setIsFinished] = useState(false);
 
   const debouncedHandleChange = _.debounce(async (e) => {
@@ -60,7 +60,7 @@ const Book = ({ title, author, id, finished, getBooks }) => {
   };
 
   return (
-    <tr className={`${isFinished ? "table-light" : ""} text-center`}>
+    <tr className={`${isFinished && hideFinished ? `d-none` : "text-center"} ${isFinished ? "table-light text-center" : ""}`}>
       <td>
         <svg
           className={`bi bi-check-circle ${
@@ -112,6 +112,7 @@ const Book = ({ title, author, id, finished, getBooks }) => {
             checked={isFinished}
             className="form-check-input"
             onChange={handleChange}
+            style={{cursor:"pointer"}}
           />
           <label className="form-check-label">Done</label>
         </div>
