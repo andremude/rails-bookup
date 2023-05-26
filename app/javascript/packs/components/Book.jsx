@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import setAxiosHeaders from "./AxiosHeaders.jsx";
+import _ from 'lodash'
 
 const Book = ({ title, author, id, finished, getBooks }) => {
   const [isFinished, setIsFinished] = useState(false);
 
-  const handleChange = async (e) => {
+  const debouncedHandleChange = _.debounce(async (e) => {
     const { name, value, checked } = e.target;
     setAxiosHeaders();
 
     try {
       if (name === "finished") {
-        const response = await axios.put(`http://localhost:3000/api/v1/books/${id}`, {
+        await axios.put(`http://localhost:3000/api/v1/books/${id}`, {
           book: {
             [name]: checked
           },
         });
-        setIsFinished(checked);
       } else {
         const response = await axios.put(`http://localhost:3000/api/v1/books/${id}`, {
           book: {
@@ -32,11 +32,26 @@ const Book = ({ title, author, id, finished, getBooks }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, 300);
 
   useEffect(() => {
     setIsFinished(finished);
   }, [finished]);
+
+  const handleCheckboxChange = async (e) => {
+    const { checked } = e.target;
+    setIsFinished(checked);
+    await debouncedHandleChange(e);
+  };
+
+  const handleChange = (e) => {
+    e.persist();
+    if (e.target.type === "checkbox") {
+      handleCheckboxChange(e);
+    } else {
+      debouncedHandleChange(e);
+    }
+  };
 
   const handleDelete = async () => {
     setAxiosHeaders();
