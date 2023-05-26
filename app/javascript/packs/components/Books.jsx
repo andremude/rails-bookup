@@ -32,7 +32,7 @@ const Books = () => {
   }
 
   return (
-    <div className="table-responsive px-2">
+    <div className="table-responsive px-4">
       <BookForm updateBooks={updateBooks}/>
         <div className='d-flex justify-content-center px-2'>
           <button className="btn btn-outline-primary btn-block mb-3 w-100" onClick={handleClick}>

@@ -25,7 +25,7 @@ const BookForm = ({ updateBooks }) => {
   }
 
   return (
-    <div className='d-flex justify-content-center row'>
+    <div className='d-flex justify-content-center row mb-2'>
       <form onSubmit={handleSubmit} className="my-3 row">
         <div className="form-group col-md-5 my-2">
           <input
