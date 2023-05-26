@@ -1,22 +1,55 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import setAxiosHeaders from "./AxiosHeaders.jsx";
 
-const Book = ( {title, author, id, getBooks}) => {
-  const [finished, setFinished] = useState()
+const Book = ({ title, author, id, finished, getBooks }) => {
+  const [isFinished, setIsFinished] = useState(false);
+
+  const handleChange = async (e) => {
+    const { name, value, checked } = e.target;
+    setAxiosHeaders();
+
+    try {
+      if (name === "finished") {
+        const response = await axios.put(`http://localhost:3000/api/v1/books/${id}`, {
+          book: {
+            [name]: checked
+          },
+        });
+        setIsFinished(checked);
+      } else {
+        const response = await axios.put(`http://localhost:3000/api/v1/books/${id}`, {
+          book: {
+            [name]: value
+          },
+        });
+        if (name === "title") {
+          title = response.data.book.title;
+        } else if (name === "author") {
+          author = response.data.book.author;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setIsFinished(finished);
+  }, [finished]);
 
   const handleDelete = async () => {
     setAxiosHeaders();
-    await axios.delete(`http://localhost:3000/api/v1/books/${id}`)
-    getBooks()
-  }
+    await axios.delete(`http://localhost:3000/api/v1/books/${id}`);
+    getBooks();
+  };
 
   return (
-    <tr className={`${finished ? "table-light" : ""} text-center`} >
+    <tr className={`${isFinished ? "table-light" : ""} text-center`}>
       <td>
         <svg
           className={`bi bi-check-circle ${
-            finished ? `text-success` : `text-muted`
+            isFinished ? `text-success` : `text-muted`
           }`}
           width="2em"
           height="2em"
@@ -39,30 +72,33 @@ const Book = ( {title, author, id, getBooks}) => {
       <td>
         <input
           type="text"
+          name="title"
           defaultValue={title}
-          disabled={finished}
+          onChange={handleChange}
+          disabled={isFinished}
           className="form-control"
         />
       </td>
       <td>
         <input
           type="text"
+          name="author"
           defaultValue={author}
-          disabled={finished}
+          onChange={handleChange}
+          disabled={isFinished}
           className="form-control"
         />
       </td>
       <td className="text-center">
-        <div className="form-check form-check-inline">
+        <div className="form-check form-check-inline pt-2">
           <input
             type="checkbox"
-            defaultChecked={finished}
+            name="finished"
+            checked={isFinished}
             className="form-check-input"
-            onChange={() => setFinished(!finished)}
+            onChange={handleChange}
           />
-          <label className="form-check-label">
-            Done
-          </label>
+          <label className="form-check-label">Done</label>
         </div>
       </td>
       <td>
@@ -73,7 +109,7 @@ const Book = ( {title, author, id, getBooks}) => {
         </button>
       </td>
     </tr>
-  )
-}
+  );
+};
 
-export default Book
+export default Book;
