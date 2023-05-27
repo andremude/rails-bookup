@@ -16,6 +16,10 @@
           </div>
         <% end %>
         <%= render "devise/shared/links" %>
+        <br>
+        <% if alert %>
+          <p class="alert bg-danger text-white"><%= alert %></p>
+        <% end %>
       </div>
     </div>
   </div>

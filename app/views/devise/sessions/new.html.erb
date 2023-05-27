@@ -21,11 +21,16 @@
             </div>
           <% end %>
 
+
           <div class="actions">
             <%= f.submit "Log in", class: "btn btn-primary btn-lg btn-block w-100 mb-4" %>
           </div>
         <% end %>
         <%= render "devise/shared/links" %>
+        <br>
+        <% if alert %>
+          <p class="alert bg-danger text-white"><%= alert %></p>
+        <% end %>
       </div>
     </div>
   </div>
