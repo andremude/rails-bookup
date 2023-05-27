@@ -48,7 +48,7 @@ const BookForm = ({ updateBooks }) => {
             id="author"/>
         </div>
         <div className="form-group col-md-2 my-2 text-center">
-          <button type='submit' className='btn btn-outline-success w-100'>
+          <button type='submit' className='btn btn-success w-100'>
             Add
           </button>
         </div>

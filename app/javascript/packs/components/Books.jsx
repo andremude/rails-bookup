@@ -35,7 +35,7 @@ const Books = () => {
     <div className="table-responsive px-4">
       <BookForm updateBooks={updateBooks}/>
         <div className='d-flex justify-content-center px-2'>
-          <button className="btn btn-outline-primary btn-block mb-3 w-100" onClick={handleClick}>
+          <button className="btn btn-primary btn-block mb-3 w-100" onClick={handleClick}>
             {hideFinished ? "Show Books Already Read" : "Hide Books Already Read"}
           </button>
         </div>
