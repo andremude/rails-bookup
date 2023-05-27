@@ -41,9 +41,9 @@ class Api::V1::BooksController < ApplicationController
       respond_to do |format|
         if @book.update(book_params)
           format.json do
-            render :show,
+            render :index,
                     status: :ok,
-                    location: api_v1_book_path(@book_item)
+                    location: api_v1_books_path
           end
         else
           format.json do
