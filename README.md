@@ -54,4 +54,5 @@ Run server
  In terminal: 
   
   run `bundle exec rspec`
+  
   In a new terminal tab run `./bin/webpack-dev-server`
