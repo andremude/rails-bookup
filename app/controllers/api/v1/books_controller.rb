@@ -6,13 +6,13 @@ class Api::V1::BooksController < ApplicationController
     @books = current_user.books.all
   end
 
-  def show
-    if authorized?
-      respond_to { |format| format.json { render :show } }
-    else
-      handle_unauthorized
-    end
-  end
+  # def show
+  #   if authorized?
+  #     respond_to { |format| format.json { render :show } }
+  #   else
+  #     handle_unauthorized
+  #   end
+  # end
 
   def create
     @book = current_user.books.build(book_params)
@@ -21,9 +21,9 @@ class Api::V1::BooksController < ApplicationController
       respond_to do |format|
         if @book.save
           format.json do
-            render :show,
+            render :index,
                     status: :created,
-                    location: api_v1_book_path(@book)
+                    location: api_v1_books_path
           end
         else
           format.json do
