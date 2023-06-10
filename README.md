@@ -18,6 +18,7 @@ Clone repository: `git@github.com:andremude/rails-bookup.git`
 Install dependencies: 
 
   `bundle install`
+  
   `npm install`
 
 <br>
